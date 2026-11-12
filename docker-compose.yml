@@ -1,0 +1,15 @@
+# Local development only. Dev mode keeps all data in memory, starts with a fixed root token
+# and listens on plain HTTP. Never use it in production.
+services:
+  vault:
+    image: hashicorp/vault:2.2.1
+    container_name: vault-dev
+    ports:
+      - "8200:8200"
+    environment:
+      VAULT_DEV_ROOT_TOKEN_ID: "dev-only-token"
+      VAULT_DEV_LISTEN_ADDRESS: "0.0.0.0:8200"
+      # For the vault CLI inside the container: docker exec vault-dev vault status
+      VAULT_ADDR: "http://127.0.0.1:8200"
+    cap_add:
+      - IPC_LOCK
